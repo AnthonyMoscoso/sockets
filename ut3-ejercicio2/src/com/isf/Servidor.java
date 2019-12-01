@@ -1,21 +1,18 @@
 package com.isf;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.swing.JOptionPane;
+
 
 public class Servidor {
 	// creo una variable estatica de mi puerto para cualquier cambio realizarlo directamente desde aqui
 	public static int PUERTO=800;
-	public static void main(String[] arg) throws IOException {
+	public static void main(String[] arg) throws IOException, InterruptedException {
 		ServerSocket servidor = new ServerSocket(PUERTO);
 		Socket clienteConectado = null;
 		InputStream inputIn = null;
@@ -44,50 +41,37 @@ public class Servidor {
 			
 			for(int i=0;i<bytes.length;i++) {
 				char letra=(char)bytes[i];
-				System.out.print(letra);
+			
 				pregunta=pregunta+letra;
-				if(letra=='i') {
+				
+				
+				if(letra=='?') {
 					break;
 				}
 				
 			}
-			//System.out.println((char)bytes[0]);
+			
 		}
-		if(pregunta.equals("hola soy anthony mi")) {
-			System.out.println("hello");
+		System.out.println(pregunta);
+		System.out.println("Respondiendo...");
+	
+		Thread.sleep(1000);
+	
+		if(pregunta.equals("como te llamas?")) {
+			System.out.println("Me llamo Ejercicio 2");
+		}
+		else if (pregunta.equals("cuantas lineas de codigo tienes?")){
+			System.out.println(pregunta.length());
 		}
 		else {
-			System.out.println("mehh");
+			System.out.println("No he entendido la pregunta");
 		}
 		
 
 	
-	
-
-		/* EL CLIENTE ME ENVIA UN MENSAJE
-		BufferedReader br = new BufferedReader(new InputStreamReader(inputIn));
-		System.out.println("Recibiendo del CLIENTE: \n\t");		
-		// leo linea a linea del buffered que reciba
-		String line=br.readLine();
-		while(line!=null) {
-			System.out.println(line);
-			line=br.readLine();
-		}
-		
-		// CREO FLUJO DE SALIDA AL CLIENTE
-		OutputStream salida = null;
-		salida = clienteConectado.getOutputStream();
-		OutputStream flujoSalida = salida;
-
-		
-	
-*/
-		// CERRAR STREAMS Y SOCKETS
 		inputIn.close();
-		//flujoEntrada.close();
-		//salida.close();
-		//flujoSalida.close();
+
 		clienteConectado.close();
 		servidor.close();
-	  }// main
+	  }
 }

@@ -18,8 +18,8 @@ public class Cliente {
 	// creamos una variable estatica final que sera nuestro puerto debido a que a la hora de necesitar cambiar el codigo
 	// podemos cambiar el Puerto directamente desde aqui
 	public static final int PUERTO=800;
-	public static final String host ="localhost";
-	public static final String RUTA=".\\src\\com\\isf\\mensaje.txt";
+	public static final String host ="192.168.2.61";
+	public static final String RUTA=".\\src\\com\\isf\\preguntas.txt";
 	public static void main (String[] args) throws IOException{
 		 DataInputStream input;
 	
@@ -29,12 +29,14 @@ public class Cliente {
 		
 		 // creamos nuestro socket cliente
 		 Socket client = new Socket(host, PUERTO);
+		 // File donde le pasaremos la ruta
 		 File file = new File(RUTA);
+		 // Un bufferInput para leer el archivo
 		 BufferedInputStream bufferInput= new BufferedInputStream(new FileInputStream(file));
+		 //un bufferOutput para escribir el archivo
 		 BufferedOutputStream bufferOutput = new BufferedOutputStream(client.getOutputStream());
-		 //Enviamos el nombre del fichero
-		 //dataOutput donde le pasaremeos nuestro socker
-		 DataOutputStream dataOut=new DataOutputStream(client.getOutputStream());
+		 
+
 		
 		 //Enviamos el fichero
 		 byteArray = new byte[(int) file.length()];
@@ -46,8 +48,7 @@ public class Cliente {
 	
 		 bufferOutput.close();
 		 bufferInput.close();
-		 dataOut.close();
-		client.close();
+		 client.close();
 		 
 		
 		 }
