@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 public class Servidor {
 	// creo una variable estatica de mi puerto para cualquier cambio realizarlo directamente desde aqui
 	public static int PUERTO=800;
@@ -43,9 +45,19 @@ public class Servidor {
 			for(int i=0;i<bytes.length;i++) {
 				char letra=(char)bytes[i];
 				System.out.print(letra);
-				
+				pregunta=pregunta+letra;
+				if(letra=='i') {
+					break;
+				}
 				
 			}
+			//System.out.println((char)bytes[0]);
+		}
+		if(pregunta.equals("hola soy anthony mi")) {
+			System.out.println("hello");
+		}
+		else {
+			System.out.println("mehh");
 		}
 		
 
