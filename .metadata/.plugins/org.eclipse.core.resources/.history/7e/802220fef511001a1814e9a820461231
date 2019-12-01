@@ -1,0 +1,56 @@
+package com.isf;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Cliente {
+	// creamos una variable estatica final que sera nuestro puerto debido a que a la hora de necesitar cambiar el codigo
+	// podemos cambiar el Puerto directamente desde aqui
+	public static final int PUERTO=800;
+public static void main(String args[]) throws UnknownHostException, IOException {
+	// Le indicamos el host
+	String Host = "localhost";
+
+	// mostramos que el Socket cliente esya iniciado
+	System.out.println("PROGRAMA CLIENTE INICIADO....");
+	// le damos como parametro el host , y el puerto
+	Socket Cliente = new Socket(Host, PUERTO);
+
+	// CREO FLUJO DE SALIDA AL SERVIDOR	
+	OutputStream dataOut = Cliente.getOutputStream();
+	
+	//leemos el fichero
+	// creamos un buffered reader apartir de un file reader de nuestro fichero txt
+	BufferedReader br = new BufferedReader (new FileReader("mensaje.txt"));
+
+	// Creamos el printWriter 
+	
+	PrintWriter pw = new PrintWriter(dataOut,true);
+	while (br.ready()) {
+		String line =br.readLine();
+		pw.println(line);
+	}
+	
+	
+
+	// CREO FLUJO DE ENTRADA AL SERVIDOR	
+	DataInputStream flujoEntrada = new 
+            DataInputStream(Cliente.getInputStream());
+
+	// EL SERVIDOR ME ENVIA UN MENSAJE
+	System.out.println("Recibiendo del SERVIDOR: \n\t" + 
+               flujoEntrada.readUTF());
+
+	// CERRAR STREAMS Y SOCKETS	
+	flujoEntrada.close();	
+	dataOut.close();	
+	Cliente.close();	
+  }// main
+}

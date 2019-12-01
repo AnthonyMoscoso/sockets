@@ -1,0 +1,38 @@
+package com.isf;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+
+public class Cliente {
+	public static final int PUERTO=6000;
+public static void main(String args[]) {
+	String Host = "localhost";
+
+	
+	System.out.println("PROGRAMA CLIENTE INICIADO....");
+	Socket Cliente = new Socket(Host, PUERTO);
+
+	// CREO FLUJO DE SALIDA AL SERVIDOR	
+	DataOutputStream flujoSalida = new
+            DataOutputStream(Cliente.getOutputStream());
+
+	// ENVIO UN SALUDO AL SERVIDOR
+	flujoSalida.writeUTF("Saludos al SERVIDOR DESDE EL CLIENTE");
+
+	// CREO FLUJO DE ENTRADA AL SERVIDOR	
+	DataInputStream flujoEntrada = new 
+            DataInputStream(Cliente.getInputStream());
+
+	// EL SERVIDOR ME ENVIA UN MENSAJE
+	System.out.println("Recibiendo del SERVIDOR: \n\t" + 
+               flujoEntrada.readUTF());
+
+	// CERRAR STREAMS Y SOCKETS	
+	flujoEntrada.close();	
+	flujoSalida.close();	
+	Cliente.close();	
+  }// main
+}// 
+}
+}

@@ -1,0 +1,81 @@
+package com.isf;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Servidor {
+	// creo una variable estatica de mi puerto para cualquier cambio realizarlo directamente desde aqui
+	public static int PUERTO=800;
+	public static void main(String[] arg) throws IOException {
+		ServerSocket servidor = new ServerSocket(PUERTO);
+		Socket clienteConectado = null;
+		System.out.println("Esperando al cliente.....");
+		clienteConectado = servidor.accept();
+
+		// CREO FLUJO DE ENTRADA DEL CLIENTE
+		
+		
+		DataOutputStream dataOut = null;
+		BufferedInputStream bufferIn;
+		BufferedOutputStream bufferOut;
+		byte[] mensaje;
+		int letra;
+		String file;
+		InputStream entrada = null;
+		entrada = clienteConectado.getInputStream();
+		//DataInputStream flujoEntrada = new DataInputStream(entrada);
+
+		// EL CLIENTE ME ENVIA UN MENSAJE
+		BufferedReader br = new BufferedReader(new InputStreamReader(entrada));
+		System.out.println("Recibiendo del CLIENTE: \n\t");		
+		// leo linea a linea del buffered que reciba
+		mensaje = new byte[1024];
+
+		bufferIn = new BufferedInputStream(clienteConectado.getInputStream());
+		DataInputStream dataIn = new DataInputStream(clienteConectado.getInputStream());
+		String line=br.readLine();
+		file = dataIn.readUTF();
+		file = file.substring(file.indexOf('\\') + 1, file.length());
+		bufferOut = new BufferedOutputStream(new FileOutputStream(file));
+		while ((letra = bufferIn.read(mensaje)) != -1) {
+			dataOut.write(mensaje, 0, letra);
+		}
+		
+		
+
+		
+	
+
+	
+
+		
+		dataOut.close();
+		dataIn.close();
+		clienteConectado.close();
+		servidor.close();
+	  }// main
+	
+	
+
+
+
+	
+	// leo linea a linea del buffered que reciba
+
+	
+	
+
+
+
+
+}

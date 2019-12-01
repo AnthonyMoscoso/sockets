@@ -1,0 +1,60 @@
+package com.isf;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Servidor {
+	// creo una variable estatica de mi puerto para cualquier cambio realizarlo directamente desde aqui
+	public static int PUERTO=800;
+	public static void main(String[] arg) throws IOException {
+		ServerSocket servidor = new ServerSocket(PUERTO);
+		Socket clienteConectado = null;
+		String linea="";
+		int letra;
+		byte[]mensaje;
+		BufferedInputStream bufferIn;
+	
+		System.out.println("Esperando al cliente.....");
+		clienteConectado = servidor.accept();
+
+		// CREO FLUJO DE ENTRADA DEL CLIENTE
+		mensaje = new byte[1024];
+		bufferIn = new BufferedInputStream(clienteConectado.getInputStream());
+		 DataInputStream dis=new DataInputStream(clienteConectado.getInputStream());
+		 //Recibimos el nombre del fichero
+		 System.out.println("recibiendo del cliente....");
+		
+		 //Para guardar fichero recibido
+	
+	
+		 while ((letra = bufferIn.read(mensaje)) != -1){
+		 	letra=bufferIn.read();
+		 	System.out.print(letra);
+		 }
+		
+		 dis.close();
+		
+		// CREO FLUJO DE SALIDA AL CLIENTE
+	
+
+		
+	
+
+		// CERRAR STREAMS Y SOCKETS
+		
+		//flujoEntrada.close();
+		
+		clienteConectado.close();
+		servidor.close();
+	  }// main
+}

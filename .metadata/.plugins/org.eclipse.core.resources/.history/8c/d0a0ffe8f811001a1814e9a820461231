@@ -1,0 +1,51 @@
+package com.isf;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Cliente {
+	// creamos una variable estatica final que sera nuestro puerto debido a que a la hora de necesitar cambiar el codigo
+	// podemos cambiar el Puerto directamente desde aqui
+	public static final int PUERTO=6000;
+	public static final String ip ="localhost";
+	public static void main (String[] args) throws IOException{
+		 DataInputStream input;
+	
+		 int in;
+		 byte[] byteArray;
+		 //Fichero a transferir
+		
+		 // creamos nuestro socket cliente
+		 Socket client = new Socket("localhost", PUERTO);
+		 
+		 BufferedInputStream bufferInput= new BufferedInputStream(new FileInputStream("H:\\2ºDAM\\Programacion_multiproceso\\2_EVALUACION\\ut3-ejercicio1\\src\\com\\isf\\mensaje.txt"));
+		 BufferedOutputStream bufferOutput = new BufferedOutputStream(client.getOutputStream());
+		 //Enviamos el nombre del fichero
+		 //dataOutput donde le pasaremeos nuestro socker
+		 DataOutputStream dataOut=new DataOutputStream(client.getOutputStream());
+		
+		 //Enviamos el fichero
+		 byteArray = new byte[8192];
+		 while ((in = bufferInput.read(byteArray)) != -1){
+			 bufferOutput.write(byteArray,0,in);
+		 }
+		 
+		 bufferInput.close();
+		 bufferOutput.close();
+		 dataOut.close();
+		client.close();
+		 
+		
+		 }
+		}
+
